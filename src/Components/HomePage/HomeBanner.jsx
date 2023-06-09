@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from '../Shared/Button';
 
 const bgClasses = "bg-no-repeat bg-[center_bottom_10%] bg-cover bg-home-banner";
@@ -13,12 +12,12 @@ const HomeBanner = () => {
         </h1>
 
         <p className="text-base">
-          What defines a good front-end developer is one that has skilled knowledge of HTML, CSS, JS with a vast understanding of User design thinking as they'll be building web interfaces with accessibility in mind. They should also be excited to learn, as the world of Front-End Development keeps evolving.
+          What defines a good front-end developer is one that has skilled knowledge of HTML, CSS, JS with a vast understanding of User design thinking as they&apos;ll be building web interfaces with accessibility in mind. They should also be excited to learn, as the world of Front-End Development keeps evolving.
         </p>
 
         <div className="text-center mt-8">
           <Button
-            type="yellow"
+            color="yellow"
           >
             Sign up
           </Button>

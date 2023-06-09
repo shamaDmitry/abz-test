@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from '../Shared/Button';
 import logo from './../../assets/logo.svg'
 
@@ -12,13 +11,13 @@ const Menu = () => {
 
         <div className="ml-auto flex items-center gap-[10px]">
           <Button
-            type="yellow"
+            color="yellow"
           >
             Users
           </Button>
 
           <Button
-            type="yellow"
+            color="yellow"
           >
             Sign up
           </Button>

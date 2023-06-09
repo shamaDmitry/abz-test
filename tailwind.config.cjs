@@ -10,7 +10,7 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        'home-banner': "url('./src/assets/pexels-alexandr-podvalny-1227513.jpeg')",
+        'home-banner': "url('./assets/pexels-alexandr-podvalny-1227513.jpeg')",
       },
       fontSize: {
         sm: ['12px', '14px'],
