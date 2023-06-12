@@ -1,26 +1,43 @@
 import { useForm } from "react-hook-form";
-import { _axios } from '../../helpers/fetcher';
 import { API_URL } from '../../helpers/const';
 import { useEffect, useState } from 'react';
+import axios from "axios";
 
 import Button from '../Shared/Button';
 import Input from '../Shared/Input';
 import InputFile from '../Shared/InputFile';
 import Radio from '../Shared/Radio';
-import { emailRules, nameRules } from "../../helpers/validationRules";
+import {
+  emailRules,
+  nameRules,
+  phoneRules,
+  photoRules,
+  positionRules
+} from "../../helpers/validationRules";
 
-const UserForm = () => {
+const UserForm = ({updateUserList}) => {
   const [position, setPosition] = useState(null);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  console.log(errors);
+  const onSubmit = async (data) => {
+    const tokenRes = await axios.get(`${API_URL}/token`);
+    const photo = data.photo[0];
 
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+    const res = await axios.post(`${API_URL}/users`, {
+      ...data,
+      photo
+    }, {
+      headers: {
+        "Content-Type": 'multipart/form-data',
+        "Token": tokenRes.data.token
+      }
+    });
+
+    updateUserList(res.data.user_id);
   };
 
   const getPositionList = async () => {
-    const res = await _axios.get(`${API_URL}/positions`);
+    const res = await axios.get(`${API_URL}/positions`);
 
     if (res.status === 200) {
       setPosition(res.data.positions);
@@ -32,7 +49,6 @@ const UserForm = () => {
     return () => { };
   }, []);
 
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <Input
@@ -42,7 +58,7 @@ const UserForm = () => {
         required
         {...register("name", nameRules)}
         helperText={errors.name?.message}
-        errors={errors.name}
+        error={errors.name}
       />
 
       <Input
@@ -52,6 +68,7 @@ const UserForm = () => {
         required
         {...register("email", emailRules)}
         helperText={errors.email?.message}
+        error={errors.email}
       />
 
       <Input
@@ -59,8 +76,9 @@ const UserForm = () => {
         placeholder="Phone"
         name="phone"
         required
-        {...register("phone", { required: true })}
-        helperText="+38 (XXX) XXX - XX - XX"
+        {...register("phone", phoneRules)}
+        helperText={errors.phone?.message}
+        error={errors.phone}
       />
 
       <p className="text-black text-base mb-[11px]">
@@ -74,14 +92,22 @@ const UserForm = () => {
               key={radio.id}
               label={radio.name}
               value={radio.id}
-              {...register("position", { required: true })}
+              {...register("position_id", positionRules)}
+              error={errors.position_id}
             />
           })
         }
       </div>
 
       <div className="mb-[50px]">
-        <InputFile />
+        <InputFile
+          buttonText="Upload"
+          placeholder="Upload your photo"
+          name="photo"
+          required
+          {...register("photo", photoRules)}
+          error={errors.photo}
+        />
       </div>
 
       <div className="text-center">
@@ -94,25 +120,6 @@ const UserForm = () => {
       </div>
     </form>
   );
-
-  // const { handleSubmit, control, reset } = useForm({
-  //   defaultValues: {
-  //     checkbox: false,
-  //   }
-  // });
-  // const onSubmit = data => console.log(data);
-
-  // return (
-  //   <form onSubmit={handleSubmit(onSubmit)}>
-  //     <Controller
-  //       name="checkbox"
-  //       control={control}
-  //       rules={{ required: true }}
-  //       render={({ field }) => <Input {...field} />}
-  //     />
-  //     <input type="submit" />
-  //   </form>
-  // );
 }
 
 export default UserForm;

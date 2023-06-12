@@ -1,35 +1,48 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, forwardRef } from 'react';
+import classNames from 'classnames';
 
-const InputFile = () => {
-  const [fileName, setFileName] = useState('Upload your photo');
+const InputFile = forwardRef(({ buttonText, placeholder, error, onBlur, onChange, name, required }, ref) => {
+  const [fileName, setFileName] = useState(placeholder);
   const inputText = useRef(null);
 
-  const onChange = (e) => {
+  const setFileNameValue = (e) => {
     const name = e.target.value.replace(/.*[/\\]/, '');
     inputText.current.classList.add('text-black/[87%]')
 
     setFileName(name);
-  }
+  };
 
   return (
     <label className="cursor-pointer text-base font-medium inline-flex rounded-[4px] w-full">
-      <div className="border border-black/[87%] rounded-tl rounded-bl py-[12px] px-[15px]">
-        Upload
+      <div
+        className={classNames("border border-black/[87%] rounded-tl rounded-bl py-[12px] px-[15px]", {
+          'border-red-500': error,
+          'text-red-500': error,
+        })}
+      >
+        {buttonText}
       </div>
       <div
         ref={inputText}
-        className="w-full text-[#7E7E7E] py-[12px] px-[16px] border border-[#D0CFCF] border-l-0 rounded-tr rounded-br text-ellipsis whitespace-nowrap overflow-hidden"
+        className={classNames("w-full text-[#7E7E7E] py-[12px] px-[16px] border border-[#D0CFCF] border-l-0 rounded-tr rounded-br text-ellipsis whitespace-nowrap overflow-hidden", {
+          'border-red-500': error
+        })}
       >
         {fileName}
       </div>
 
       <input
-        onChange={onChange}
+        onChange={e => { onChange(e); onBlur(e); setFileNameValue(e) }}
+        onBlur={onBlur}
         className="hidden"
+        required={required}
+        name={name}
         type="file"
+        accept="image/jpeg"
+        ref={ref}
       />
     </label>
   );
-}
+})
 
 export default InputFile;

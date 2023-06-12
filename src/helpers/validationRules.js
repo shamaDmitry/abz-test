@@ -1,4 +1,4 @@
-import { emailPattern } from "./const";
+import { emailPattern, phonePattern } from "./const";
 
 export const nameRules = {
   required: "Username should contain 2-60 characters",
@@ -25,5 +25,24 @@ export const emailRules = {
   pattern: {
     value: emailPattern,
     message: 'Must be a valid email according to RFC2822',
+  }
+};
+
+export const phoneRules = {
+  required: "Required",
+  pattern: {
+    value: phonePattern,
+    message: 'Number should start with code of Ukraine +38 (XXX) XXX XX XX',
+  }
+};
+
+export const positionRules = {
+  required: "Required",
+};
+
+export const photoRules = {
+  required: "Required",
+  validate: async (value) => {
+    // console.log(value);
   }
 };
