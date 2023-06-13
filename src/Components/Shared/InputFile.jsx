@@ -1,7 +1,7 @@
 import { useState, useRef, forwardRef } from 'react';
 import classNames from 'classnames';
 
-const InputFile = forwardRef(({ buttonText, placeholder, error, onBlur, onChange, name, required }, ref) => {
+const InputFile = forwardRef(({ buttonText, placeholder, error, onBlur, onChange, name, required, helperText }, ref) => {
   const [fileName, setFileName] = useState(placeholder);
   const inputText = useRef(null);
 
@@ -13,7 +13,7 @@ const InputFile = forwardRef(({ buttonText, placeholder, error, onBlur, onChange
   };
 
   return (
-    <label className="cursor-pointer text-base font-medium inline-flex rounded-[4px] w-full">
+    <label className="relative cursor-pointer text-base font-medium inline-flex rounded-[4px] w-full">
       <div
         className={classNames("border border-black/[87%] rounded-tl rounded-bl py-[12px] px-[15px]", {
           'border-red-500': error,
@@ -41,6 +41,14 @@ const InputFile = forwardRef(({ buttonText, placeholder, error, onBlur, onChange
         accept="image/jpeg"
         ref={ref}
       />
+
+      {
+        helperText && <div className={classNames(`absolute -bottom-[19px] left-[16px] text-sm font-normal text-[#7E7E7E]`, {
+          'text-red-500': error
+        })}>
+          {helperText}
+        </div>
+      }
     </label>
   );
 })

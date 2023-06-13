@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
+import { Tooltip } from 'react-tooltip'
 
 const UserCard = ({ data }) => {
   const {
@@ -26,12 +27,19 @@ const UserCard = ({ data }) => {
       <p className="text-base text-ellipsis overflow-hidden whitespace-nowrap max-w-full">
         {position}
       </p>
-      <p className="text-base text-ellipsis overflow-hidden whitespace-nowrap max-w-full">
+      <p
+        data-tooltip-id="my-tooltip"
+        data-tooltip-content={email}
+        data-tooltip-place="top"
+        className="text-base text-ellipsis overflow-hidden whitespace-nowrap max-w-full"
+      >
         {email}
       </p>
       <p className="text-base">
         {phone}
       </p>
+
+      <Tooltip id="my-tooltip" />
     </section>
   );
 }

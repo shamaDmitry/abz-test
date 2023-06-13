@@ -15,8 +15,10 @@ import {
   positionRules
 } from "../../helpers/validationRules";
 
-const UserForm = ({updateUserList}) => {
+const UserForm = () => {
   const [position, setPosition] = useState(null);
+  const [isFormSend, setIsFormSend] = useState(false);
+
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
@@ -33,7 +35,7 @@ const UserForm = ({updateUserList}) => {
       }
     });
 
-    updateUserList(res.data.user_id);
+    setIsFormSend(true);
   };
 
   const getPositionList = async () => {
@@ -48,6 +50,12 @@ const UserForm = ({updateUserList}) => {
     getPositionList();
     return () => { };
   }, []);
+
+  if (isFormSend) {
+    return (
+      <div className="bg-no-repeat bg-center bg-contain bg-form-success max-w-[328px] h-[290px] mx-auto mb-4"></div>
+    )
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -91,6 +99,7 @@ const UserForm = ({updateUserList}) => {
             return <Radio
               key={radio.id}
               label={radio.name}
+              checked={radio.id === 1}
               value={radio.id}
               {...register("position_id", positionRules)}
               error={errors.position_id}
@@ -107,6 +116,7 @@ const UserForm = ({updateUserList}) => {
           required
           {...register("photo", photoRules)}
           error={errors.photo}
+          helperText={errors.photo?.message}
         />
       </div>
 

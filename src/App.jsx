@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import Menu from './Components/Base/Menu'
 import HomeBanner from './Components/HomePage/HomeBanner'
 import UserForm from './Components/HomePage/UserForm'
 import UserList from './Components/HomePage/UserList'
 
 function App() {
-  const [userId, setUserId] = useState(null);
-
   return (
     <section className="flex flex-col min-h-screen">
       <Menu />
@@ -19,9 +16,7 @@ function App() {
             Working with GET request
           </h1>
 
-          <UserList
-            shouldUserUpdate={userId}
-          />
+          <UserList />
         </section>
 
         <section className="container lg:px-[60px] md:px-[32px] sm:px-[16px] px-4 mb-[100px]">
@@ -30,9 +25,7 @@ function App() {
           </h1>
 
           <div className="max-w-[380px] mx-auto">
-            <UserForm
-              updateUserList={setUserId}
-            />
+            <UserForm />
           </div>
         </section>
       </section>

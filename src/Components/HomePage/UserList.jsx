@@ -5,7 +5,11 @@ import Button from '../Shared/Button';
 import UserCard from '../Shared/UserCard';
 import { orderBy } from 'lodash';
 
-const UserList = ({ shouldUserUpdate }) => {
+import { useAtom } from "jotai";
+import { userDataAtom } from '../../atoms/userAtoms';
+
+const UserList = () => {
+  // const [data, setData] = useAtom(userDataAtom);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [nextLink, setNextLink] = useState("");
@@ -35,7 +39,7 @@ const UserList = ({ shouldUserUpdate }) => {
     setData([]);
     getUsers(`${API_URL}/users?page=1&count=6`);
     return () => { };
-  }, [shouldUserUpdate]);
+  }, []);
 
   if (isLoading) return <Preloader className="text-[#00BDD3] w-[48px] h-[48px]" />
 

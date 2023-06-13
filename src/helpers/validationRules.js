@@ -42,7 +42,16 @@ export const positionRules = {
 
 export const photoRules = {
   required: "Required",
-  validate: async (value) => {
-    // console.log(value);
+  validate: {
+    size: (value) => {
+      const { size } = value[0];
+
+      return parseInt(size) <= 5242880 || 'should be lower than 5MB'
+    },
+    type: (value) => {
+      const { type } = value[0];
+
+      return type === 'image/jpeg' || 'should be image/jpeg'
+    },
   }
 };

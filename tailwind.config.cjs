@@ -11,6 +11,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'home-banner': "url('./assets/pexels-alexandr-podvalny-1227513.jpeg')",
+        'form-success': "url('./assets/success-image.svg')",
       },
       fontSize: {
         sm: ['12px', '14px'],
@@ -37,7 +38,7 @@ module.exports = {
         '.container': {
           maxWidth: '100%',
           '@screen sm': {
-            maxWidth: '360px',
+            maxWidth: '580px',
           },
           '@screen md': {
             maxWidth: '768px',
